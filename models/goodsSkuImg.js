@@ -2,8 +2,13 @@ const { DataTypes } = require('sequelize');
 // 商品SPU图片
 module.exports = (sequelize) => {
   sequelize.define(
-    'goodsImg',
+    'goodsSkuImg',
     {
+      skuId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: '商品规格Id',
+      },
       name: {
         type: DataTypes.STRING(50),
       },
@@ -18,7 +23,7 @@ module.exports = (sequelize) => {
       },
     },
     {
-      tableName: 'goods_img',
+      tableName: 'goods_sku_img',
     }
   );
 };

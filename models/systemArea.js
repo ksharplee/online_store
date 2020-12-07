@@ -17,6 +17,7 @@ module.exports = (sequelize) => {
       areaType: {
         type: DataTypes.TINYINT,
         allowNull: false,
+        comment: '1.省 2.市 3.区'
       },
     },
     {

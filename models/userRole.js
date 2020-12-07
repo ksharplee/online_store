@@ -12,11 +12,12 @@ module.exports = (sequelize) => {
       decription: {
         type: DataTypes.STRING,
       },
-      type: {
+      id: {
         type: DataTypes.TINYINT,
+        primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
-        defaultValue: 0,
-        comment: '0.采购商 1.供应商  2.管理员',
+        comment: '1.采购商 2.供应商 3.管理员',
       },
     },
     {

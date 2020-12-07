@@ -4,6 +4,11 @@ module.exports = (sequelize) => {
   sequelize.define(
     'systemAd',
     {
+      positionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: '广告位Id',
+      },
       img: {
         type: DataTypes.STRING,
         allowNull: false,

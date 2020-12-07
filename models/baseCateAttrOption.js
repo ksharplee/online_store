@@ -4,7 +4,12 @@ module.exports = (sequelize) => {
   sequelize.define(
     'baseCateAttrOption',
     {
-      value: {
+      attrId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: '平台属性Id',
+      },
+      option: {
         type: DataTypes.STRING(20),
         allowNull: false,
       },

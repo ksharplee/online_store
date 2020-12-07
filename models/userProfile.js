@@ -8,6 +8,17 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
+      rankId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        comment: '用户等级Id',
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: '用户Id',
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,

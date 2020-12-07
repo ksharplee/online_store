@@ -4,6 +4,10 @@ module.exports = (sequelize) => {
   sequelize.define(
     'baseCate',
     {
+      groupId: {
+        type: DataTypes.INTEGER,
+        comment: '商品类别分组Id',
+      },
       name: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -27,25 +31,25 @@ module.exports = (sequelize) => {
         type: DataTypes.TINYINT,
         allowNull: false,
         defaultValue: 1,
-        comment: '是否启用,默认为是'
+        comment: '是否启用,默认为是',
       },
       level: {
         type: DataTypes.TINYINT,
         allowNull: false,
         defaultValue: 1,
-        comment: '分类等级，默认1级'
+        comment: '分类等级，默认1级',
       },
       leaf: {
         type: DataTypes.TINYINT,
         allowNull: false,
         defaultValue: 1,
-        comment: '分类是否为叶子节点(即最后一级),默认为是'
+        comment: '分类是否为叶子节点(即最后一级),默认为是',
       },
       inGroupTitle: {
         type: DataTypes.TINYINT,
         allowNull: false,
         defaultValue: 0,
-        comment: '是否作为分类分组标题显示,默认为否'
+        comment: '是否作为分类分组标题显示,默认为否',
       },
       sort: {
         type: DataTypes.INTEGER,

@@ -19,6 +19,12 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
+      // roleId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   defaultValue: 0,
+      //   comment: '角色Id'
+      // },
       hash: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -29,11 +35,9 @@ module.exports = (sequelize) => {
       },
       question: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       answer: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       status: {
         type: DataTypes.TINYINT,

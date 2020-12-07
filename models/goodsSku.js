@@ -4,6 +4,11 @@ module.exports = (sequelize) => {
   sequelize.define(
     'goodsSku',
     {
+      spuId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: '商品Id',
+      },
       name: {
         type: DataTypes.STRING(200),
         allowNull: false,

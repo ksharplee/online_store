@@ -8,6 +8,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
+      cateId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: '分类Id'
+      },
       decription: {
         type: DataTypes.STRING,
       },

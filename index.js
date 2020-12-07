@@ -1,17 +1,16 @@
 const { Sequelize } = require('sequelize')
 const associate = require('./associations');
-const area = require('./data/area');
 
 // 新建sequelize实例，分别传递参数'数据库名称', '连接账号', '密码', options
 const sequelize = new Sequelize('online_store', 'ksharplee', '1985lee74', {
   host: 'localhost',
   dialect: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
+  // pool: {
+  //   max: 5,
+  //   min: 0,
+  //   acquire: 30000,
+  //   idle: 10000
+  // },
   logging: false
   // 记录日志 -- 显示所有日志函数调用参数
   // logging: (...msg) => console.log(msg)
@@ -24,6 +23,7 @@ const modelDefiners = [
   require('./models/userProfile'),
   require('./models/userRank'),
   require('./models/userAddress'),
+  // 系统模块
   require('./models/systemArea'),
   // 广告模块
   require('./models/systemAdPosition'),
@@ -31,55 +31,39 @@ const modelDefiners = [
   // 文章模块
   require('./models/infoCategory'),
   require('./models/infoArticle'),
+  // 平台模块
+  require('./models/baseCate'),
+  require('./models/baseCateGroup'),
+  require('./models/baseCateBrand'),
+  require('./models/baseCateAttr'),
+  require('./models/baseCateAttrOption'),
+  // 商品模块
+  require('./models/goodsSpu'),
+  require('./models/goodsSku'),
+  require('./models/goodsSkuImg'),
+  require('./models/goodsSpec'),
+  require('./models/goodsSpecOption'),
+  // 多对多连接表
+  require('./models/mtmUserRole'),
+  require('./models/mtmCateBrand'),
+  require('./models/mtmSkuSpec'),
 ];
 
 modelDefiners.forEach(modelDefiner => modelDefiner(sequelize))
 
-associate(sequelize)
+associate(sequelize);
 
-const provinces = area.province_list;
-const cities = area.city_list;
-const counties = area.county_list;
+const inits = [
+  require('./init/initArea'),
+  require('./init/initRoles'),
+  require('./init/initAdministrator'),
+];
+
 (async () => {
   await sequelize.sync({ force: true });
+  // await sequelize.sync({ alter: true });
 
-  const Area = sequelize.models.systemArea;
-  const Role = sequelize.models.userRole;
-
-  for (const key in provinces) {
-    Area.create({
-      areaId: key,
-      areaName: provinces[key],
-      areaType: 1,
-    });
-  }
-
-  for (const key in cities) {
-    Area.create({
-      areaId: key,
-      areaName: cities[key],
-      areaType: 2,
-    });
-  }
-
-  for (const key in counties) {
-    Area.create({
-      areaId: key,
-      areaName: counties[key],
-      areaType: 3,
-    });
-  }
-
-  // 角色
-  const roles = [
-    { type: 0, name: '采购商' },
-    { type: 1, name: '供应商' },
-    { type: 2, name: '管理员' },
-  ];
-
-  roles.forEach(role => {
-    Role.create(role)
-  });
+  inits.forEach(init => init(sequelize));
 })()
 
 
