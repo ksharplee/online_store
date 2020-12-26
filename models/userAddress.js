@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
+
 // 用户收货地址表
 module.exports = (sequelize) => {
   sequelize.define(
@@ -29,7 +31,7 @@ module.exports = (sequelize) => {
       address: {
         type: DataTypes.STRING,
         allowNull: false,
-        comment: '详细地址'
+        comment: '详细地址',
       },
       default: {
         type: DataTypes.TINYINT,
@@ -38,6 +40,22 @@ module.exports = (sequelize) => {
       },
       zipcode: {
         type: DataTypes.STRING,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('updatedAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
       },
     },
     {

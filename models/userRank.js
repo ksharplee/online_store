@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
+
 // 客户等级表
 module.exports = (sequelize) => {
   sequelize.define(
@@ -23,6 +25,22 @@ module.exports = (sequelize) => {
       rebate: {
         type: DataTypes.INTEGER,
         comment: '折扣',
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('updatedAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
       },
     },
     {

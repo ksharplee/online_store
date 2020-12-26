@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
+
 // 友情链接表
 module.exports = (sequelize) => {
   sequelize.define(
@@ -25,6 +27,22 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: 1,
         comment: '是否启用,默认为是',
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('updatedAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
       },
     },
     {

@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize')
+const moment = require('moment');
+
 // 用户登录信息表
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
@@ -44,6 +46,22 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: 1,
         comment: '1.启用 0.停用',
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('updatedAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
       },
     },
     {

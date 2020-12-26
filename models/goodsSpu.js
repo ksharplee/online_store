@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
+
 // 商品SPU表
 module.exports = (sequelize) => {
   sequelize.define(
@@ -22,6 +24,22 @@ module.exports = (sequelize) => {
       },
       comments: {
         type: DataTypes.INTEGER,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('updatedAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
       },
     },
     {

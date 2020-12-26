@@ -11,16 +11,27 @@ const genPassword = (password) => {
   };
 };
 
+const users = [
+  {
+    userName: 'administrator',
+    roles: [1,2,3]
+  },
+  {
+    userName: 'ksharplee',
+    roles: [1]
+  }
+];
+
 module.exports = async (sequelize) => {
   const user = sequelize.models.userLogin;
 
   const { hash, salt } = genPassword('123456');
-  const admin = await user.create({
-    userName: 'administrator',
-    hash,
-    salt,
-  });
-  await admin.setUserRoles([2, 1, 3])
-  // const adminRoles = await admin.getUserRoles();
-  // console.log('函数 ~ file: initAdministrator.js ~ line 12 ~ role', adminRoles.map(item => item.dataValues.id));
+  users.forEach(async usr => {
+    const res = await user.create({
+      userName: usr.userName,
+      hash,
+      salt,
+    })
+    await res.setUserRoles(usr.roles)
+  })
 }

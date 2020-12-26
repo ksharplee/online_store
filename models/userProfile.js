@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
+
 // 用户个人信息表
 module.exports = (sequelize) => {
   sequelize.define(
@@ -42,6 +44,22 @@ module.exports = (sequelize) => {
       },
       points: {
         type: DataTypes.INTEGER,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('updatedAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
       },
     },
     {

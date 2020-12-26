@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
+
 // 大陆地区表
 module.exports = (sequelize) => {
   sequelize.define(
@@ -17,7 +19,23 @@ module.exports = (sequelize) => {
       areaType: {
         type: DataTypes.TINYINT,
         allowNull: false,
-        comment: '1.省 2.市 3.区'
+        comment: '1.省 2.市 3.区',
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('updatedAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
+        },
       },
     },
     {
