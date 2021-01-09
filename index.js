@@ -1,4 +1,4 @@
-const { Sequelize, Op } = require('sequelize')
+const { Sequelize, Op, QueryTypes } = require('sequelize');
 const associate = require('./associations');
 
 // 新建sequelize实例，分别传递参数'数据库名称', '连接账号', '密码', options
@@ -68,6 +68,16 @@ associate(sequelize);
 
   const users = await sequelize.models.userLogin.findAndCountAll({
     attributes: ['userName', 'createdAt', 'id', 'status'],
+    where: {
+      id: {
+        [Op.notIn]: sequelize.literal(
+          `(SELECT DISTINCT u.id FROM user_login AS u
+              JOIN mtm_user_role AS j ON u.id = j.userId
+              JOIN user_role as r ON j.roleId = r.id
+              WHERE j.roleId = 2)`
+        ),
+      },
+    },
     distinct: true,
     include: [
       {

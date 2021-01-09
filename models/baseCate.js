@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const moment = require('moment')
+const moment = require('moment');
 
 // 商品分类表
 module.exports = (sequelize) => {
@@ -49,13 +49,11 @@ module.exports = (sequelize) => {
       },
       inGroupTitle: {
         type: DataTypes.TINYINT,
-        allowNull: false,
         defaultValue: 0,
         comment: '是否作为分类分组标题显示,默认为否',
       },
       sort: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         defaultValue: 99,
       },
       createdAt: {
