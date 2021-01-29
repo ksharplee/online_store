@@ -70,6 +70,11 @@ module.exports = (sequelize) => {
     otherKey: 'cateId',
     through: Models.mtmCateBrand,
   });
+  // 商品分类递归查询
+  Models.baseCate.hasMany(Models.baseCate, {
+    as: 'children',
+    foreignKey: 'parentId',
+  });
   // 商品分类分组与商品分类一对多
   Models.baseCateGroup.hasMany(Models.baseCate, {
     foreignKey: 'groupId',
