@@ -90,51 +90,14 @@ const getChildNeeds = async (rootNeeds) => {
 }
 
 (async () => {
-  // await sequelize.sync({ force: true });
+  await sequelize.sync({ force: true });
   // await sequelize.sync({ alter: true });
-
-  // inits.forEach(init => init(sequelize));
-
-  // const users = await sequelize.models.userLogin.findAndCountAll({
-  //   attributes: ['userName', 'createdAt', 'id', 'status'],
-  //   where: {
-  //     id: {
-  //       [Op.notIn]: sequelize.literal(
-  //         `(SELECT DISTINCT u.id FROM user_login AS u
-  //             JOIN mtm_user_role AS j ON u.id = j.userId
-  //             JOIN user_role as r ON j.roleId = r.id
-  //             WHERE j.roleId = 2)`
-  //       ),
-  //     },
-  //   },
-  //   distinct: true,
-  //   include: [
-  //     {
-  //       model: sequelize.models.userRole,
-  //       attributes: ['id', 'name'],
-  //       // 去掉多对多连接表的查询数据,只留下目标表的内容
-  //       through: {
-  //         attributes: [],
-  //         group: 'userId',
-  //       },
-  //     },
-  //   ],
-  // });
-  // console.log(JSON.stringify(users, null, 2));
 
   const roots = await sequelize.models.baseCate.findAll({
     where: {
       parentId: 0
     }
   });
-  // const rootIds = roots.map(item => item.id)
-  // const treeRoot = rootIds.map(id => new Category(id))
-  const promises = []
-  console.log("函数 ~ file: index.js ~ line 135 ~ roots", roots)
-  roots.forEach(root => promises.push(getNeedsTree(root.id)))
-  Promise.all(promises).then(res => {
-  console.log("函数 ~ file: index.js ~ line 135 ~ Promise.all ~ res", JSON.stringify(res, null, 2))
-  })
 })()
 
 
