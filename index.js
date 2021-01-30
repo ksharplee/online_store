@@ -48,6 +48,7 @@ const modelDefiners = [
   require('./models/mtmUserRole'),
   require('./models/mtmCateBrand'),
   require('./models/mtmSkuSpec'),
+  require('./models/mtmCateAttr'),
 ];
 
 modelDefiners.forEach(modelDefiner => modelDefiner(sequelize))
@@ -60,44 +61,12 @@ associate(sequelize);
 //   require('./init/initUsers'),
 // ];
 
-const getNeedsTree = async (id) => {
-    let rootNeeds = await sequelize.models.baseCate.findAll({
-        where : {
-            id
-        }
-    })
-    rootNeeds = await getChildNeeds(rootNeeds);
-    return rootNeeds;
-}
-
-const getChildNeeds = async (rootNeeds) => {
-    let expendPromise = [];
-    rootNeeds.forEach(item => {
-        expendPromise.push(sequelize.models.baseCate.findAll({
-            where : {
-                parentId : item.id
-            }
-        }))
-    })
-    let child = await Promise.all(expendPromise);
-    for(let [idx , item] of child.entries()){
-        if(item.length > 0){
-            item = await getChildNeeds(item);
-        }
-        rootNeeds[idx].setDataValue('children', item);
-    }
-    return rootNeeds;
-}
-
 (async () => {
   await sequelize.sync({ force: true });
   // await sequelize.sync({ alter: true });
 
-  const roots = await sequelize.models.baseCate.findAll({
-    where: {
-      parentId: 0
-    }
-  });
+  const mtmCateAttr = await sequelize.models.mtmCateAttr.findAll()
+  console.log("函数 ~ file: index.js ~ line 68 ~ mtmCateAttr", JSON.stringify(mtmCateAttr, null, 2))
 })()
 
 

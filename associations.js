@@ -84,14 +84,18 @@ module.exports = (sequelize) => {
     foreignKey: 'groupId',
     onDelete: 'RESTRICT',
   });
-  // 商品分类与平台属性一对多
-  Models.baseCate.hasMany(Models.baseCateAttr, {
+  // 商品分类与平台属性多对多
+  Models.baseCate.belongsToMany(Models.baseCateAttr, {
     foreignKey: 'cateId',
     onDelete: 'CASCADE',
+    as: 'attrs',
+    through: Models.mtmCateAttr,
   });
-  Models.baseCateAttr.belongsTo(Models.baseCate, {
+  Models.baseCateAttr.belongsToMany(Models.baseCate, {
     foreignKey: 'cateId',
     onDelete: 'RESTRICT',
+    as: 'cates',
+    through: Models.mtmCateAttr,
   });
   // 平台属性与平台属性值一对多
   Models.baseCateAttr.hasMany(Models.baseCateAttrOption, {
